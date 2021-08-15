@@ -22,8 +22,34 @@ public class Main {
                 return;
             }
             int s = 0;
-            for (String value : ar) {
-                s += Integer.parseInt(value);
+            for (int i = 0; i < ar.length; i++) {
+//                System.out.print(ar[i]+"-->");
+                String ss = ar[i].trim();
+//                System.out.println(ss);
+                if (ss.length() == 0) {
+                    continue;
+                }
+                if (ss.charAt(0) == '-') {
+                    int ck = 0;
+                    for (int j = 1; j < ss.length(); j++) {
+                        if (ss.charAt(j) != '-') {
+                            ck = 1;
+                            break;
+                        }
+                    }
+                    if (ck == 1) {
+                        s += Integer.parseInt(ss);
+                    } else {
+                        int xx = ss.length();
+                        if (xx % 2 == 1) {
+                            ar[i + 1] = "-" + ar[i + 1];
+                        }
+                    }
+                } else if (ss.charAt(0) == '+') {
+                    continue;
+                } else {
+                    s += Integer.parseInt(ss);
+                }
             }
             System.out.println(s);
         }
