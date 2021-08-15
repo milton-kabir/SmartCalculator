@@ -1,258 +1,205 @@
 //package calculator;
 package com.kabir.milton;
 
-<<<<<<< HEAD
+import java.math.BigInteger;
 import java.util.*;
-=======
-import java.util.ArrayList;
-import java.util.Scanner;
->>>>>>> 8fc8695babfa16e844e3c50014fef9dc896867c9
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
+    private static final String ALPHABET = "[a-zA-Z]+";
+    private static final String NUMBER = "[+-]?\\d+";
+    private static final Pattern ASSIGNMENT_PATTERN = Pattern.compile("^(.+?)=(.+?)$");
+    private static final Map<String, String> variable_storage = new HashMap<>();
 
     public static void main(String[] args) {
-        // write your code here
-        Scanner sc = new Scanner(System.in);
-<<<<<<< HEAD
-        var myMap = new HashMap<String, String>();
-
-        while (true) {
-            int inv = 0;
-            String st = sc.nextLine();
-            String[] ar = st.split("\\s+");
-            var br = new ArrayList<String>();
-            for (String s : ar) {
-                br.add(s.trim());
-            }
-            if (ar[0].length() == 0) {
-                continue;
-            }
-=======
-
-        while (true) {
-            int inv = 0;
-            String[] ar = sc.nextLine().split(" ");
-            if (ar[0].length() == 0) {
-                continue;
-            }
-
->>>>>>> 8fc8695babfa16e844e3c50014fef9dc896867c9
-            if (ar[0].charAt(0) == '/') {
-                if (ar[0].equals("/help")) {
-                    System.out.println("The program calculates the sum of numbers");
-                    continue;
-                } else if (ar[0].equals("/exit")) {
+        Scanner s = new Scanner(System.in);
+        while (s.hasNextLine()) {
+            String input = s.nextLine();
+            if (input.matches("/\\w+")) {
+                if (input.equals("/exit")) {
                     System.out.println("Bye!");
                     return;
+                } else if (input.equals("/help")) {
+                    System.out.println("The program calculates the sum of numbers using addition and subtraction");
                 } else {
                     System.out.println("Unknown command");
-                    continue;
                 }
-
-<<<<<<< HEAD
-            }
-
-            for (int i = 0; i < st.length(); i++) {
-                if (st.charAt(i) == '=') {
-                    inv++;
-                }
-            }
-            if (inv > 1) {
-                System.out.println("Invalid assignment");
-            } else if (inv == 1) {
-                br.clear();
-                ar = st.split("=");
-                for (String s : ar) {
-                    s = s.trim();
-                    br.add(s);
-                }
-                String s1 = br.get(0);
-                String s2 = br.get(1);
-                int ck1 = 0;
-                for (int i = 0; i < s1.length(); i++) {
-                    if ((s1.charAt(i) < 'a' || s1.charAt(i) > 'z') && (s1.charAt(i) < 'A' || s1.charAt(i) > 'Z')) {
-                        ck1 = 1;
-                        break;
-                    }
-                }
-                if (ck1 == 1) {
-                    System.out.println("Invalid identifier");
-                    continue;
-                }
-
-                int ck2 = 0, ck3 = 0;
-                for (int i = 0; i < s2.length(); i++) {
-                    if ((s2.charAt(i) < 'a' || s2.charAt(i) > 'z') && (s2.charAt(i) < 'A' || s2.charAt(i) > 'Z')) {
-                        ck2 = 1;
-                    } else {
-                        ck3 = 1;
-                    }
-                }
-//                System.out.println(ck2+" --)"+ck3);
-                if (ck2 == 1 && ck3 == 1) {
-                    System.out.println("Invalid assignment");
-                    continue;
-                }
-                if (ck3 == 1) {
-//                    System.out.println("kjfhvlkjshdkjlhf");
-                    if (myMap.containsKey(s2)) {
-                        String xx = myMap.get(s2);
-                        myMap.put(s1, xx);
-                    } else {
-                        System.out.println("Unknown variable");
-                    }
-                } else if (ck2 == 1) {
-                    myMap.put(s1, s2);
-                }
-
-            } else {
-                br.clear();
-                for (String value : ar) {
-                    br.add(value.trim());
-                }
-                for (int j = 0; j < br.size(); j++) {
-                    if (br.get(j).charAt(0) == '+') {
-                        br.set(j, "+");
-                    } else if (br.get(j).charAt(0) == '-') {
-                        if (br.get(j).length() % 2 == 1) {
-                            br.set(j, "-");
-                        } else {
-                            br.set(j, "+");
-                        }
-                    }
-                }
-                var ii = new ArrayList<Integer>();
-                var op = new ArrayList<String>();
-                int cc = 0;
-                for (String value : br) {
-                    if (value.equals("+") || value.equals("-")) {
-                        op.add(value);
-                    } else {
-                        if (myMap.containsKey(value)) {
-                            ii.add(Integer.parseInt(myMap.get(value)));
-                        } else {
-                            int ca = 0;
-                            for (int i = 0; i < value.length(); i++) {
-                                if ((value.charAt(i) < 'a' || value.charAt(i) > 'z') && (value.charAt(i) < 'A' || value.charAt(i) > 'Z')) {
-                                    ca = 1;
-                                    break;
-                                }
-                            }
-                            if (ca == 1) {
-                                ii.add(Integer.parseInt(value));
-                            } else {
-                                System.out.println("Unknown variable");
-                                cc = 1;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (cc == 0) {
-                    int s = ii.get(0);
-                    if (ii.size() == op.size() + 1) {
-                        for (int i = 1; i < ii.size(); i++) {
-                            if (op.get(i - 1).equals("+")) {
-                                s += ii.get(i);
-                            } else {
-                                s -= ii.get(i);
-                            }
-                        }
-
-                        System.out.println(s);
-                    } else {
-                        System.out.println("Invalid expression");
-                    }
-                }
-            }
-=======
-            }
-            int s;
-            var ii = new ArrayList<Integer>();
-            var op = new ArrayList<String>();
-            for (String value : ar) {
-//                System.out.print(ar[i]+"-->");
-                String ss = value.trim();
-//                System.out.println(ss);
-                if (ss.length() == 0) {
-                    continue;
-                }
-
-                for (int j = 0; j < ss.length(); j++) {
-                    if (ss.charAt(j) != '+' && ss.charAt(j) != '-' && (ss.charAt(j) < '0' || ss.charAt(j) > '9')) {
-                        inv = 1;
-                        break;
-                    }
-                }
-                if (inv == 1) {
-                    break;
-                }
-
-                if (ss.charAt(0) == '-') {
-                    int ck = 0;
-                    for (int j = 1; j < ss.length(); j++) {
-                        if (ss.charAt(j) != '-') {
-                            ck = 1;
-                            break;
-                        }
-                    }
-                    if (ck == 1) {
-                        ii.add(Integer.parseInt(ss));
-                    } else {
-                        if (ss.length() % 2 == 1) {
-                            op.add("-");
-                        } else {
-                            op.add("+");
-                        }
-                    }
-                } else if (ss.charAt(0) == '+') {
-                    int ck = 0;
-                    for (int j = 1; j < ss.length(); j++) {
-                        if (ss.charAt(j) != '+') {
-                            ck = 1;
-                            break;
-                        }
-                    }
-                    if (ck == 1) {
-                        ii.add(Integer.parseInt(ss));
-                    } else {
-                        op.add("+");
-                    }
-                } else {
-                    int ck = 0;
-                    for (int j = 0; j < ss.length(); j++) {
-                        if (ss.charAt(j) == '+' || ss.charAt(j) == '-') {
-                            ck = 1;
-                            break;
-                        }
-                    }
-                    if (ck == 1) {
-                        inv = 1;
-                        break;
-                    }
-                    ii.add(Integer.parseInt(ss));
-                }
-            }
-            if (inv == 1) {
-                System.out.println("Invalid expression");
                 continue;
             }
-            s = ii.get(0);
-//            System.out.println(ii.size()+"  --  "+op.size());
-            if (ii.size() == op.size() + 1) {
-                for (int i = 1; i < ii.size(); i++) {
-                    if (op.get(i - 1).equals("+")) {
-                        s += ii.get(i);
+            if (assignVariable(input) || isEmptyInput(input)) {
+                continue;
+            }
+            try {
+                System.out.println(calculate(convertInfixToPostfix(input)));
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    static boolean assignVariable(String input) {
+        Matcher matcher = ASSIGNMENT_PATTERN.matcher(removeSpaces(input));
+        if (matcher.matches()) {
+            String identifier = matcher.group(1);
+            if (!identifier.matches(ALPHABET)) {
+                System.out.println("Invalid identifier");
+                return true;
+            }
+            String assignment = matcher.group(2);
+            if (assignment.matches(ALPHABET)) {
+                if (variable_storage.containsKey(assignment)) {
+                    variable_storage.put(identifier, variable_storage.get(assignment));
+                } else {
+                    if (!variable_storage.containsKey(assignment)) {
+                        System.out.println("Unknown variable");
+                        return true;
                     } else {
-                        s -= ii.get(i);
+                        variable_storage.put(identifier, variable_storage.get(assignment));
                     }
                 }
-
-                System.out.println(s);
+            } else if (assignment.matches(NUMBER)) {
+                variable_storage.put(identifier, assignment);
             } else {
-                System.out.println("Invalid expression");
+                System.out.println("Invalid assignment");
             }
->>>>>>> 8fc8695babfa16e844e3c50014fef9dc896867c9
+            return true;
+        }
+        return false;
+    }
+
+    static String removeSpaces(String input) {
+        return input.replaceAll("\\s+", "");
+    }
+
+    static boolean isEmptyInput(String input) {
+        return input == null || input.isBlank();
+    }
+
+    static String calculate(Deque<String> postfix) {
+        Deque<String> stack = new ArrayDeque<>();
+
+        while (!postfix.isEmpty()) {
+            final String incoming = postfix.removeFirst();
+
+            if (incoming.matches(NUMBER)) {
+                stack.offerFirst(incoming);
+            } else if (incoming.matches(ALPHABET)) {
+                if (variable_storage.containsKey(incoming)) {
+                    stack.offerFirst(variable_storage.get(incoming));
+                } else {
+                    if (variable_storage.containsKey(incoming)) {
+                        stack.offerFirst(variable_storage.get(incoming));
+                    } else {
+                        throw new IllegalArgumentException("Unknown variable");
+                    }
+                }
+            } else {
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("Invalid expression");
+                } else {
+                    final String second = stack.removeFirst();
+                    final String first = stack.removeFirst();
+                    stack.offerFirst(processNumber(incoming, first, second));
+
+                }
+            }
+        }
+        if (stack.size() != 1) {
+            throw new IllegalArgumentException("Invalid expression");
+        }
+        return stack.peekFirst();
+    }
+
+    static String processNumber(String operator, String firstNum, String secondNum) {
+        switch (operator) {
+            case "*":
+                return new BigInteger(firstNum).multiply(new BigInteger(secondNum)).toString();
+            case "/":
+                return new BigInteger(firstNum).divide(new BigInteger(secondNum)).toString();
+            case "+":
+                return new BigInteger(firstNum).add(new BigInteger(secondNum)).toString();
+            case "-":
+                return new BigInteger(firstNum).subtract(new BigInteger(secondNum)).toString();
+            default:
+                throw new IllegalArgumentException("Unknown Operator");
+        }
+    }
+
+    static Deque<String> convertInfixToPostfix(String expression) {
+        Deque<String> result = new ArrayDeque<>();
+        Deque<String> stack = new ArrayDeque<>();
+        final Pattern pattern = Pattern.compile("(^[+-]?\\d+)|(\\d+)|([a-zA-Z]+)|(([-+^/*])\\5*)|([()])");
+        final Matcher matcher = pattern.matcher(expression);
+        while (matcher.find()) {
+            String incoming = matcher.group();
+            if (incoming.matches("[+-]?\\d+|[a-zA-Z]+")) {
+                result.add(incoming);
+            } else {
+                String operator;
+                if (incoming.length() == 1) {
+                    operator = incoming;
+                } else {
+                    String first = incoming.substring(0, 1);
+                    if (!"+".equals(first) && !"-".equals(first)) {
+                        throw new IllegalArgumentException("Invalid expression");
+                    }
+                    if (incoming.length() % 2 == 0) {
+                        operator = "+";
+                    } else operator = first;
+                }
+                final String leftParenthesis = "(";
+                final String rightParenthesis = ")";
+                if (rightParenthesis.equals(operator)) {
+                    boolean leftParenthesisFound = false;
+                    while (!stack.isEmpty()) {
+                        final String top = stack.removeFirst();
+                        if (leftParenthesis.equals(top)) {
+                            leftParenthesisFound = true;
+                            break;
+                        }
+                        result.add(top);
+                    }
+                    if (!leftParenthesisFound) {
+                        throw new IllegalArgumentException("Invalid expression");
+                    }
+                    continue;
+                }
+                if (leftParenthesis.equals(operator) || stack.isEmpty() || leftParenthesis.equals(stack.peekFirst())) {
+                    stack.offerFirst(operator);
+                    continue;
+                }
+                final int incomingPrecedence = getOperatorPrecedence(operator);
+                if (incomingPrecedence <= getOperatorPrecedence(stack.peekFirst())) {
+                    result.add(stack.removeFirst());
+                    while (!stack.isEmpty()) {
+                        final String top = stack.peekFirst();
+                        if (leftParenthesis.equals(top) || incomingPrecedence > getOperatorPrecedence(top)) {
+                            break;
+                        }
+                        result.add(stack.removeFirst());
+                    }
+                }
+                stack.offerFirst(operator);
+            }
+        }
+        result.addAll(stack);
+        if (result.contains("(")) {
+            throw new IllegalArgumentException("Invalid expression");
+        }
+        return result;
+    }
+
+    static int getOperatorPrecedence(String operator) {
+        switch (operator) {
+            case "*":
+            case "/":
+                return 2;
+            case "+":
+            case "-":
+                return 1;
+            default:
+                throw new IllegalArgumentException("Unknown Operator");
         }
     }
 }
